@@ -1,17 +1,54 @@
-
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
- "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html>
-  <head>
-    <title>503 first byte timeout</title>
-  </head>
-  <body>
-    <h1>Error 503 first byte timeout</h1>
-    <p>first byte timeout</p>
-    <h3>Error 54113</h3>
-    <p>Details: cache-bkk2310034-BKK 1693887241 398569324</p>
-    <hr>
-    <p>Varnish cache server</p>
-  </body>
-</html>
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: my-first-app
+  name: my-first-app
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    app: my-first-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: my-first-app
+  name: my-first-app
+spec:
+  selector:
+    matchLabels:
+      app: my-first-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: my-first-app
+    spec:
+      containers:
+      - image: <image>
+        name: my-first-app
+        ports:
+        - containerPort: 80
+          name: http
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-first-app
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: <EDIT>.training.dnsfor.me
+    http:
+      paths:
+      - backend:
+          service:
+            name: my-first-app
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
