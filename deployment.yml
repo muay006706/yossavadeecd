@@ -29,7 +29,7 @@ spec:
         app: my-first-app
     spec:
       containers:
-      - image: <image>
+      - image: docker pull ghcr.io/muay006706/yossavadeeci
         name: my-first-app
         ports:
         - containerPort: 80
@@ -42,7 +42,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: <EDIT>.training.dnsfor.me
+  - host: yossavadee.training.dnsfor.me:2080
     http:
       paths:
       - backend:
