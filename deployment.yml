@@ -42,7 +42,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: yossavadee.training.dnsfor.me
+  - host: yossavadee01.training.dnsfor.me
     http:
       paths:
       - backend:
